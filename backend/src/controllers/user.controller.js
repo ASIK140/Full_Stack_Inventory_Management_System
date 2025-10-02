@@ -48,6 +48,7 @@ export const logInUser = asyncHandler(async (req, res) => {
   }
   const loggedInUser = await User.findById(user._id).select("-password ");
   const token = generateToken(loggedInUser._id);
+
   if (!token) {
     throw new ApiError(500, "Internal server Error");
   }
@@ -57,7 +58,13 @@ export const logInUser = asyncHandler(async (req, res) => {
   };
   res
     .cookie("token", token, options)
-    .json(new ApiResponse(200, loggedInUser, "User login Successfully"));
+    .json(
+      new ApiResponse(
+        200,
+        { user: loggedInUser, token },
+        "User login Successfully"
+      )
+    );
 });
 
 // @desc Logout User

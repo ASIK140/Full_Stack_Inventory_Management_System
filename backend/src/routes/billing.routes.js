@@ -8,7 +8,7 @@ import { protect } from "../middlewares/auth.middleware.js";
 
 const router = express.Router();
 
-router.post("/", protect, createBill);
+router.post("/", createBill);
 router.get("/", protect, getAllBill);
 router.get("/:id", protect, getBillById);
 
